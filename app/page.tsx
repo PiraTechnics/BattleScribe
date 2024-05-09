@@ -1,11 +1,9 @@
-//import { fetchFilteredMonsters } from "@/lib/data";
+import Link from "next/link";
 
-export default async function Home() {
-	//const monsters = await fetchFilteredMonsters("");
-	//console.log(monsters);
+export default function Home() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-between p-24">
-			<div className="text-xl">Hello World!</div>
+			<Link href="/dashboard">Dashboard</Link>
 		</main>
 	);
 }

@@ -9,6 +9,9 @@ const ArmorClassSchema = new Schema({
 	type: { type: String, required: true },
 	value: { type: Number, required: true },
 	desc: { type: String },
+	armor: { type: String },
+	spell: { type: String },
+	condition: { type: String },
 });
 const DiceSchema = new Schema({
 	type: { type: String, required: true },
