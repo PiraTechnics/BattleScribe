@@ -1,20 +1,38 @@
 import mongoose from "mongoose";
+const DATABASE_URL: string = process.env.DB_STRING!;
 
-const MONGODB_URI = process.env.DB_STRING!;
-
-if (!MONGODB_URI) {
+if (!DATABASE_URL) {
 	throw new Error(
-		"No DB String found, Please define DB_STRING in environment varaible file"
+		"Please define the DATABASE_URL environment variable inside .env.local"
 	);
 }
 
-export default async function dbConnect() {
-	await mongoose.connect(MONGODB_URI);
-	console.log("Connected to Database");
-	//return mongoose;
+declare global {
+	var mongoose: any; // This must be a `var` and not a `let / const`
 }
 
-export async function dbDisconnect() {
-	await mongoose.disconnect();
-	console.log("Disconnected from Database");
+let cached = global.mongoose;
+
+if (!cached) {
+	cached = global.mongoose = { conn: null, promise: null };
 }
+
+async function connectDB() {
+	if (cached.conn) {
+		return cached.conn;
+	}
+
+	if (!cached.promise) {
+		const opts = {
+			bufferCommands: false,
+		};
+
+		cached.promise = mongoose.connect(DATABASE_URL, opts).then((mongoose) => {
+			return mongoose;
+		});
+	}
+	cached.conn = await cached.promise;
+	return cached.conn;
+}
+
+export default connectDB;
