@@ -8,7 +8,12 @@ export interface Monster {
 	hp: number;
 	hp_dice: rollableDice;
 	speed: creatureSpeed;
-	ability_scores: abilityScores;
+	strength: abilityScore;
+	dexterity: abilityScore;
+	constitution: abilityScore;
+	intelligence: abilityScore;
+	wisdom: abilityScore;
+	charisma: abilityScore;
 	saving_throws?: [proficiency];
 	skills?: [proficiency];
 	damage_vulnerabilities?: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
@@ -53,15 +58,6 @@ export type creatureType =
 	| "swarm of tiny beasts";
 
 //Note: Should we include subtypes or nah?
-
-export interface abilityScores {
-	strength: abilityScore;
-	dexterity: abilityScore;
-	constituion: abilityScore;
-	intelligence: abilityScore;
-	wisdom: abilityScore;
-	charisma: abilityScore;
-}
 
 export type basicAbility =
 	| "strength"

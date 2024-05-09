@@ -41,6 +41,14 @@ const diceRoll = (dice: rollableDice) => {
 	return `${dice.amount}${dice.type} + ${dice.modifier}`;
 };
 
+const formatAbilityModifier = (score: number) => {
+	if (!score || score > 30 || score < 0) {
+		throw new Error("Invalid Ability Score"); //TODO: properly catch this somewhere
+	}
+	const result = Math.floor((score - 10) / 2);
+	return `(${result >= 0 ? "+" : ""}${result})`;
+};
+
 export default async function MonsterCard({ index }: MonsterCardProps) {
 	const monster: Monster = await fetchMonster(index);
 
@@ -51,7 +59,7 @@ export default async function MonsterCard({ index }: MonsterCardProps) {
 	return (
 		<article
 			id={`monster-${monster.index}`}
-			className="grid grid-flow-row divide-y-2 divide-red-500 gap-1"
+			className="grid grid-flow-row divide-y-2 divide-red-500 gap-1 max-w-xl"
 		>
 			<section id="heading">
 				<h1>{monster.name}</h1>
@@ -74,6 +82,44 @@ export default async function MonsterCard({ index }: MonsterCardProps) {
 				<div className="flex gap-1">
 					<span className="font-bold">Speed:</span>
 					{commaSeparatedList(formatSpeeds(monster.speed))}
+				</div>
+			</section>
+			<section id="ability-scores" className="flex justify-between md:px-2">
+				<div id="strength" className="text-center">
+					<p className="font-bold">STR</p>
+					<p>
+						{monster.strength} {formatAbilityModifier(monster.strength)}
+					</p>
+				</div>
+				<div id="dexterity" className="text-center">
+					<p className="font-bold">DEX</p>
+					<p>
+						{monster.dexterity} {formatAbilityModifier(monster.dexterity)}
+					</p>
+				</div>
+				<div id="constitution" className="text-center">
+					<p className="font-bold">CON</p>
+					<p>
+						{monster.constitution} {formatAbilityModifier(monster.constitution)}
+					</p>
+				</div>
+				<div id="intelligence" className="text-center">
+					<p className="font-bold">INT</p>
+					<p>
+						{monster.intelligence} {formatAbilityModifier(monster.intelligence)}
+					</p>
+				</div>
+				<div id="wisdom" className="text-center">
+					<p className="font-bold">WIS</p>
+					<p>
+						{monster.wisdom} {formatAbilityModifier(monster.wisdom)}
+					</p>
+				</div>
+				<div id="charisma" className="text-center">
+					<p className="font-bold">CHA</p>
+					<p>
+						{monster.charisma} {formatAbilityModifier(monster.charisma)}
+					</p>
 				</div>
 			</section>
 		</article>
