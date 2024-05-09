@@ -71,6 +71,7 @@ const SpecialAbilitySchema = new Schema({
 	name: { type: String, required: true },
 	desc: { type: String, required: true },
 	usage: { type: AbilityUsageSchema },
+	//TO-DO: need to add in breakdown for spells and reference spell schema when created
 });
 const DamageSchema = new Schema({
 	damage_type: { type: String, required: true },
@@ -84,8 +85,6 @@ const ActionSchema = new Schema({
 	usage: { type: AbilityUsageSchema },
 	dc: { type: DifficultyClassSchema },
 });
-// TO-DO: Add in more esoteric sub-schema:
-// ie Legendary Actions, Reactions, etc ..
 
 const MonsterSchema = new Schema({
 	index: { type: String, required: true },
@@ -108,9 +107,16 @@ const MonsterSchema = new Schema({
 	languages: { type: [String] },
 	challenge_rating: { type: Number, required: true },
 	xp: { type: Number, required: true },
+	proficiency_bonus: { type: Number }, //TO-DO: figure out if this is required, and how we'd use it generally
 	special_abilities: { type: [SpecialAbilitySchema] },
 	actions: { type: [ActionSchema], required: true },
+	reactions: { type: [ActionSchema] },
+	legendary_actions: { type: [ActionSchema] },
+	desc: { type: String }, //TO-DO: should sanitize this since it can contain newlines and such
 });
+
+//TO-DO get a generic 'Legendary Actions' descriptor, filling in name of monster -- virtual?
+//addendum: do all mosnters with Legendary actions get 3?
 
 // TO-DO: Image support? How to source, etc?
 
