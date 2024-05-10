@@ -1,40 +1,49 @@
+import {
+	Ability,
+	Skill,
+	AbilityScore,
+	RollableDice,
+	Dice,
+	Damage,
+} from "./common";
+
 export interface Monster {
 	index: string;
 	name: string;
-	size: creatureSize;
-	type: creatureType;
+	size: CreatureSize;
+	type: CreatureType;
 	alignment: string;
-	armor_class: [monsterArmorClass];
+	armor_class: [CreatureArmorClass];
 	hp: number;
-	hp_dice: rollableDice;
-	speed: creatureSpeed;
+	hp_dice: RollableDice;
+	speed: CreatureSpeeds;
 	ability_scores: {
-		strength: abilityScore;
-		dexterity: abilityScore;
-		constitution: abilityScore;
-		intelligence: abilityScore;
-		wisdom: abilityScore;
-		charisma: abilityScore;
+		strength: AbilityScore;
+		dexterity: AbilityScore;
+		constitution: AbilityScore;
+		intelligence: AbilityScore;
+		wisdom: AbilityScore;
+		charisma: AbilityScore;
 	};
-	saving_throws: [proficiency];
-	skills: [proficiency];
+	saving_throws: [Proficiency];
+	skills: [Proficiency];
 	damage_vulnerabilities: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
 	damage_resistances: [string];
 	damage_immunities: [string];
 	condition_immunities: [string]; //should be a list of possible conditions, loaded from db?
-	senses: monsterSenses;
+	senses: CreatureSenses;
 	languages?: [string]; //TO-DO: source languages list?
 	proficiency_bonus: number;
-	challenge_rating: challengeRating;
+	challenge_rating: ChallengeRating;
 	xp: number;
-	special_abilities?: [specialAbility];
-	actions: [monsterAction];
-	reactions?: [monsterAction];
-	legendary_actions?: [monsterAction];
+	special_abilities?: [SpecialAbility];
+	actions: [CreatureAction];
+	reactions?: [CreatureAction];
+	legendary_actions?: [CreatureAction];
 	desc?: string;
 }
 
-export type creatureSize =
+export type CreatureSize =
 	| "Tiny"
 	| "Small"
 	| "Medium"
@@ -42,7 +51,7 @@ export type creatureSize =
 	| "Huge"
 	| "Gargantuan";
 
-export type creatureType =
+export type CreatureType =
 	| "beast"
 	| "humanoid"
 	| "dragon"
@@ -61,67 +70,7 @@ export type creatureType =
 
 //Note: Should we include subtypes or nah?
 
-export type basicAbility =
-	| "strength"
-	| "dexterity"
-	| "constitution"
-	| "intelligence"
-	| "wisdom"
-	| "charisma";
-
-export type skill =
-	| "athletics"
-	| "acrobatics"
-	| "sleight of hand"
-	| "stealth"
-	| "Arcana"
-	| "History"
-	| "investigation"
-	| "nature"
-	| "religion"
-	| "animal handling"
-	| "insight"
-	| "medicine"
-	| "perception"
-	| "survival"
-	| "deception"
-	| "intimidation"
-	| "performance"
-	| "persuasion";
-
-export type abilityScore =
-	| 1
-	| 2
-	| 3
-	| 4
-	| 5
-	| 6
-	| 7
-	| 8
-	| 9
-	| 10
-	| 11
-	| 12
-	| 13
-	| 14
-	| 15
-	| 16
-	| 17
-	| 18
-	| 19
-	| 20
-	| 21
-	| 22
-	| 23
-	| 24
-	| 25
-	| 26
-	| 27
-	| 28
-	| 29
-	| 30;
-
-export type challengeRating =
+export type ChallengeRating =
 	| 0.2
 	| 0.25
 	| 0.5
@@ -156,7 +105,7 @@ export type challengeRating =
 	| 29
 	| 30;
 
-export interface monsterArmorClass {
+export interface CreatureArmorClass {
 	type: "natural" | "dex" | "armor" | "spell" | "condition";
 	value: number;
 	armor?: string;
@@ -164,7 +113,7 @@ export interface monsterArmorClass {
 	condition?: string;
 }
 
-export interface creatureSpeed {
+export interface CreatureSpeeds {
 	walk?: string;
 	fly?: string;
 	climb?: string;
@@ -173,33 +122,25 @@ export interface creatureSpeed {
 	hover?: boolean;
 }
 
-export interface proficiency {
+export interface Proficiency {
 	//TO-DO: modify this to enforce what can be a saving throw and what can be a skill proficiency
-	ability: basicAbility | skill;
+	ability: Ability | Skill;
 	modifier: Number;
 }
 
-export type dice = "d4" | "d6" | "d8" | "d10" | "d12" | "d20";
-
-export interface rollableDice {
-	type: dice;
-	amount: Number;
-	modifier: Number;
-}
-
-export interface monsterAction {
+export interface CreatureAction {
 	name: string;
 	desc: string;
 	attack_bonus: number;
 	damage: [
 		{
 			damage_type: string;
-			damage_dice: rollableDice;
+			damage_dice: RollableDice;
 		}
 	];
 }
 
-export interface monsterSenses {
+export interface CreatureSenses {
 	passive_perception: number;
 	darkvision?: string;
 	blindsight?: string;
@@ -207,28 +148,23 @@ export interface monsterSenses {
 	truesight?: string;
 }
 
-export interface abilityUsage {
+export interface AbilityUsage {
 	type: "recharge on roll" | "per day" | "recharge on rest";
 	times: Number;
-	dice: dice;
+	dice: Dice;
 	min_value: Number;
 }
 
-export interface specialAbility {
+export interface SpecialAbility {
 	name: string;
 	desc: string;
-	usage: abilityUsage;
+	usage: AbilityUsage;
 	//note: might be more to add here, spellcasting, damage etc -- worth reconsidering action vs ability schema
-}
-
-export interface damage {
-	damage_type: string;
-	damage_dice: rollableDice;
 }
 
 export interface action {
 	name: string;
 	desc: string;
 	attack_bonus: Number;
-	damage: damage;
+	damage: Damage;
 }

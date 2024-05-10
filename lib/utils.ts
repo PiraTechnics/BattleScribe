@@ -1,9 +1,9 @@
+import { RollableDice } from "./definitions/common";
 import {
-	challengeRating,
-	creatureSpeed,
-	monsterSenses,
-	proficiency,
-	rollableDice,
+	ChallengeRating,
+	CreatureSpeeds,
+	CreatureSenses,
+	Proficiency,
 } from "./definitions/monster";
 
 export const capitalizeWords = (string: string) => {
@@ -35,7 +35,7 @@ export const commaSeparatedList = (array: Array<string>) => {
 	return string;
 };
 
-export const formatChallengeRating = (cr: challengeRating) => {
+export const formatChallengeRating = (cr: ChallengeRating) => {
 	if (cr === 0.2) return "1/8";
 	else if (cr === 0.25) return "1/4";
 	else if (cr === 0.5) return "1/2";
@@ -46,7 +46,7 @@ export const formatXP = (xp: number) => {
 	return `(${xp.toString()} XP)`;
 };
 
-export const formatSpeeds = (speeds: creatureSpeed) => {
+export const formatSpeeds = (speeds: CreatureSpeeds) => {
 	let formattedArr: Array<string> = [];
 	const speedsArr: [string, string | boolean][] = Object.entries(speeds);
 	speedsArr.forEach((entry) => {
@@ -59,7 +59,7 @@ export const formatSpeeds = (speeds: creatureSpeed) => {
 	return formattedArr;
 };
 
-export const formatSkills = (proficiences: Array<proficiency>) => {
+export const formatSkills = (proficiences: Array<Proficiency>) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
 		formattedArr.push(`${capitalize(entry.ability)} +${entry.modifier}`);
@@ -68,7 +68,7 @@ export const formatSkills = (proficiences: Array<proficiency>) => {
 	return formattedArr;
 };
 
-export const formatSavingThrows = (proficiences: Array<proficiency>) => {
+export const formatSavingThrows = (proficiences: Array<Proficiency>) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
 		formattedArr.push(`${abbreviate(entry.ability)} +${entry.modifier}`);
@@ -77,7 +77,7 @@ export const formatSavingThrows = (proficiences: Array<proficiency>) => {
 	return formattedArr;
 };
 
-export const formatSenses = (senses: monsterSenses) => {
+export const formatSenses = (senses: CreatureSenses) => {
 	let formattedSenses: Array<string> = [];
 	const sensesArray = Object.entries(senses);
 
@@ -90,7 +90,7 @@ export const formatSenses = (senses: monsterSenses) => {
 	return formattedSenses;
 };
 
-export const diceRoll = (dice: rollableDice) => {
+export const diceRoll = (dice: RollableDice) => {
 	return `${dice.amount}${dice.type} + ${dice.modifier}`;
 };
 
