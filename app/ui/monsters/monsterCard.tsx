@@ -1,5 +1,9 @@
 import { fetchMonster } from "@/lib/data";
-import { Monster } from "@/lib/definitions/monster";
+import {
+	CreatureAction,
+	Monster,
+	SpecialAbility,
+} from "@/lib/definitions/monster";
 import {
 	commaSeparatedList,
 	diceRoll,
@@ -11,6 +15,7 @@ import {
 	formatChallengeRating,
 	formatXP,
 	abbreviate,
+	legendaryActionsHeader,
 } from "@/lib/utils";
 
 interface MonsterCardProps {
@@ -115,11 +120,54 @@ export default async function MonsterCard({ index }: MonsterCardProps) {
 						monster.xp
 					)}`}</span>
 				</div>
-				<div id="proficiency-bonus" className="flex gap-1">
-					<span className="font-bold">Proficiency Bonus</span>
-					<span>+{monster.proficiency_bonus}</span>
-				</div>
+				{monster.proficiency_bonus && (
+					<div id="proficiency-bonus" className="flex gap-1">
+						<span className="font-bold">Proficiency Bonus</span>
+						<span>+{monster.proficiency_bonus}</span>
+					</div>
+				)}
 			</section>
+			{monster.special_abilities.length > 0 && (
+				<section id="special-abilities">
+					{monster.special_abilities.map((entry: SpecialAbility) => (
+						<div key={`${monster.index}-${entry.name}`} className="mb-2">
+							<span className="font-semibold italic">{entry.name}. </span>
+							<span>{entry.desc}</span>
+						</div>
+					))}
+				</section>
+			)}
+			<section id="actions">
+				{monster.actions.map((entry: CreatureAction) => (
+					<div key={`${monster.index}-${entry.name}`} className="mb-2">
+						<span className="font-semibold italic">{entry.name}. </span>
+						<span>{entry.desc}</span>
+					</div>
+				))}
+			</section>
+			{monster.reactions.length > 0 && (
+				<section id="reactions">
+					{monster.reactions.map((entry: CreatureAction) => (
+						<div key={`${monster.index}-${entry.name}`} className="mb-2">
+							<span className="font-semibold italic">{entry.name}. </span>
+							<span>{entry.desc}</span>
+						</div>
+					))}
+				</section>
+			)}
+			{monster.legendary_actions.length > 0 && (
+				<section id="legendary-actions">
+					<div className="mt-1 mb-2">
+						{legendaryActionsHeader(monster.name)}
+					</div>
+					{monster.legendary_actions.map((entry: CreatureAction) => (
+						<div key={`${monster.index}-${entry.name}`} className="mb-2">
+							<span className="font-semibold italic">{entry.name}. </span>
+							<span>{entry.desc}</span>
+						</div>
+					))}
+				</section>
+			)}
 		</article>
 	);
 }

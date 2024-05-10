@@ -33,13 +33,13 @@ export interface Monster {
 	condition_immunities: [string]; //should be a list of possible conditions, loaded from db?
 	senses: CreatureSenses;
 	languages?: [string]; //TO-DO: source languages list?
-	proficiency_bonus: number;
+	proficiency_bonus?: number;
 	challenge_rating: ChallengeRating;
 	xp: number;
-	special_abilities?: [SpecialAbility];
+	special_abilities: [SpecialAbility];
 	actions: [CreatureAction];
-	reactions?: [CreatureAction];
-	legendary_actions?: [CreatureAction];
+	reactions: [CreatureAction];
+	legendary_actions: [CreatureAction];
 	desc?: string;
 }
 

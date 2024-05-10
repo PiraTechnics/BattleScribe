@@ -101,3 +101,17 @@ export const formatAbilityModifier = (score: number) => {
 	const result = Math.floor((score - 10) / 2);
 	return `(${result >= 0 ? "+" : ""}${result})`;
 };
+
+export const shortName = (name: string) => {
+	const nameArr = name.split(" ");
+	return nameArr[nameArr.length - 1];
+	//TO-DO: check for cases where the final word in the name is not appropriate for shortened naming -- see what we can do here (perhaps have it be a schema field sourced by the author?)
+};
+
+export const legendaryActionsHeader = (name: string) => {
+	return `The ${shortName(
+		name
+	).toLowerCase()} can take 3 legendary actions, choosing from the options below. Only one legendary action option can be used at a time and only at the end of another creature's turn. The ${shortName(
+		name
+	).toLowerCase()} regains spent legendary actions at the start of its turn.`;
+};
