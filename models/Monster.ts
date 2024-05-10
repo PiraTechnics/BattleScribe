@@ -111,6 +111,18 @@ const ActionSchema = new Schema(
 	{ _id: false }
 );
 
+const AbilityScoresSchema = new Schema(
+	{
+		strength: { type: Number, required: true },
+		dexterity: { type: Number, required: true },
+		constitution: { type: Number, required: true },
+		intelligence: { type: Number, required: true },
+		wisdom: { type: Number, required: true },
+		charisma: { type: Number, required: true },
+	},
+	{ _id: false }
+);
+
 const MonsterSchema = new Schema({
 	index: { type: String, required: true },
 	name: { type: String, required: true },
@@ -121,12 +133,7 @@ const MonsterSchema = new Schema({
 	hp: { type: Number, required: true }, // should be at least 1
 	hp_dice: { type: DiceSchema, required: true },
 	speed: { type: SpeedSchema, required: true },
-	strength: { type: Number, required: true },
-	dexterity: { type: Number, required: true },
-	constitution: { type: Number, required: true },
-	intelligence: { type: Number, required: true },
-	wisdom: { type: Number, required: true },
-	charisma: { type: Number, required: true },
+	ability_scores: { type: AbilityScoresSchema, required: true },
 	damage_vulnerabilities: { type: [String] },
 	damage_resistances: { type: [String] },
 	damage_immunities: { type: [String] },

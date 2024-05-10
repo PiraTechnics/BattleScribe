@@ -10,6 +10,7 @@ import {
 	formatSenses,
 	formatChallengeRating,
 	formatXP,
+	abbreviate,
 } from "@/lib/utils";
 
 interface MonsterCardProps {
@@ -52,42 +53,18 @@ export default async function MonsterCard({ index }: MonsterCardProps) {
 				</div>
 			</section>
 			<section id="ability-scores" className="flex justify-between md:px-2">
-				<div id="strength" className="text-center">
-					<p className="font-bold">STR</p>
-					<p>
-						{monster.strength} {formatAbilityModifier(monster.strength)}
-					</p>
-				</div>
-				<div id="dexterity" className="text-center">
-					<p className="font-bold">DEX</p>
-					<p>
-						{monster.dexterity} {formatAbilityModifier(monster.dexterity)}
-					</p>
-				</div>
-				<div id="constitution" className="text-center">
-					<p className="font-bold">CON</p>
-					<p>
-						{monster.constitution} {formatAbilityModifier(monster.constitution)}
-					</p>
-				</div>
-				<div id="intelligence" className="text-center">
-					<p className="font-bold">INT</p>
-					<p>
-						{monster.intelligence} {formatAbilityModifier(monster.intelligence)}
-					</p>
-				</div>
-				<div id="wisdom" className="text-center">
-					<p className="font-bold">WIS</p>
-					<p>
-						{monster.wisdom} {formatAbilityModifier(monster.wisdom)}
-					</p>
-				</div>
-				<div id="charisma" className="text-center">
-					<p className="font-bold">CHA</p>
-					<p>
-						{monster.charisma} {formatAbilityModifier(monster.charisma)}
-					</p>
-				</div>
+				{Object.entries(monster.ability_scores).map((ability) => (
+					<div
+						key={`${monster.index}-${ability[0]}`}
+						id="strength"
+						className="text-center"
+					>
+						<p className="font-bold">{abbreviate(ability[0])}</p>
+						<p>
+							{ability[1]} {formatAbilityModifier(ability[1])}
+						</p>
+					</div>
+				))}
 			</section>
 			<section id="attributes">
 				{monster.saving_throws.length > 0 && (

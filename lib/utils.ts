@@ -21,6 +21,10 @@ export const capitalize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+export const abbreviate = (string: string) => {
+	return string.slice(0, 3).toUpperCase();
+};
+
 export const commaSeparatedList = (array: Array<string>) => {
 	let string = "";
 	array.forEach((entry, i) => {
@@ -67,7 +71,7 @@ export const formatSkills = (proficiences: Array<proficiency>) => {
 export const formatSavingThrows = (proficiences: Array<proficiency>) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
-		formattedArr.push(`${abilityAbbrev(entry.ability)} +${entry.modifier}`);
+		formattedArr.push(`${abbreviate(entry.ability)} +${entry.modifier}`);
 	});
 
 	return formattedArr;
@@ -96,8 +100,4 @@ export const formatAbilityModifier = (score: number) => {
 	}
 	const result = Math.floor((score - 10) / 2);
 	return `(${result >= 0 ? "+" : ""}${result})`;
-};
-
-export const abilityAbbrev = (ability: string) => {
-	return ability.slice(0, 3).toUpperCase();
 };

@@ -8,12 +8,14 @@ export interface Monster {
 	hp: number;
 	hp_dice: rollableDice;
 	speed: creatureSpeed;
-	strength: abilityScore;
-	dexterity: abilityScore;
-	constitution: abilityScore;
-	intelligence: abilityScore;
-	wisdom: abilityScore;
-	charisma: abilityScore;
+	ability_scores: {
+		strength: abilityScore;
+		dexterity: abilityScore;
+		constitution: abilityScore;
+		intelligence: abilityScore;
+		wisdom: abilityScore;
+		charisma: abilityScore;
+	};
 	saving_throws: [proficiency];
 	skills: [proficiency];
 	damage_vulnerabilities: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
