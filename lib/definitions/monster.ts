@@ -14,16 +14,16 @@ export interface Monster {
 	intelligence: abilityScore;
 	wisdom: abilityScore;
 	charisma: abilityScore;
-	saving_throws?: [proficiency];
-	skills?: [proficiency];
-	damage_vulnerabilities?: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
-	damage_resistances?: [string];
-	damage_immunities?: [string];
-	condition_immunities?: [string]; //should be a list of possible conditions, loaded from db?
-	senses?: monsterSenses;
+	saving_throws: [proficiency];
+	skills: [proficiency];
+	damage_vulnerabilities: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
+	damage_resistances: [string];
+	damage_immunities: [string];
+	condition_immunities: [string]; //should be a list of possible conditions, loaded from db?
+	senses: monsterSenses;
 	languages?: [string]; //TO-DO: source languages list?
-	challenge_rating: number;
 	proficiency_bonus: number;
+	challenge_rating: challengeRating;
 	xp: number;
 	special_abilities?: [specialAbility];
 	actions: [monsterAction];
@@ -88,6 +88,41 @@ export type skill =
 	| "persuasion";
 
 export type abilityScore =
+	| 1
+	| 2
+	| 3
+	| 4
+	| 5
+	| 6
+	| 7
+	| 8
+	| 9
+	| 10
+	| 11
+	| 12
+	| 13
+	| 14
+	| 15
+	| 16
+	| 17
+	| 18
+	| 19
+	| 20
+	| 21
+	| 22
+	| 23
+	| 24
+	| 25
+	| 26
+	| 27
+	| 28
+	| 29
+	| 30;
+
+export type challengeRating =
+	| 0.2
+	| 0.25
+	| 0.5
 	| 1
 	| 2
 	| 3

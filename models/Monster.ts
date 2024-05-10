@@ -47,14 +47,17 @@ const ProficiencySchema = new Schema(
 	},
 	{ _id: false }
 );
-const SenseSchema = new Schema({
-	//Note: might want to redesign this as a name, number pair
-	passive_perception: { type: Number },
-	blindsight: { type: String },
-	darkvision: { type: String },
-	tremorsense: { type: String },
-	truesight: { type: String },
-});
+const SenseSchema = new Schema(
+	{
+		//Note: might want to redesign this as a name, number pair
+		passive_perception: { type: Number },
+		blindsight: { type: String },
+		darkvision: { type: String },
+		tremorsense: { type: String },
+		truesight: { type: String },
+	},
+	{ _id: false }
+);
 const AbilityUsageSchema = new Schema(
 	{
 		type: {

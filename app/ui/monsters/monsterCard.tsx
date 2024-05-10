@@ -1,53 +1,20 @@
 import { fetchMonster } from "@/lib/data";
+import { Monster } from "@/lib/definitions/monster";
 import {
-	Monster,
-	creatureSpeed,
-	dice,
-	rollableDice,
-} from "@/lib/definitions/monster";
+	commaSeparatedList,
+	diceRoll,
+	formatAbilityModifier,
+	formatSavingThrows,
+	formatSkills,
+	formatSpeeds,
+	formatSenses,
+	formatChallengeRating,
+	formatXP,
+} from "@/lib/utils";
 
 interface MonsterCardProps {
 	index: string;
 }
-
-const capitalize = (string: string) => {
-	return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-const commaSeparatedList = (array: Array<string>) => {
-	let string = "";
-	array.forEach((entry, i) => {
-		string += entry;
-		if (i + 1 !== array.length) string += ", ";
-	});
-
-	return string;
-};
-
-const formatSpeeds = (speeds: creatureSpeed) => {
-	let formattedArr: Array<string> = [];
-	const speedsArr: [string, string | boolean][] = Object.entries(speeds);
-	speedsArr.forEach((entry) => {
-		const speedType = capitalize(entry[0]);
-		const speedVal = typeof entry[1] === `string` ? entry[1] : "";
-
-		formattedArr.push(`${speedType} ${speedVal}`);
-	});
-
-	return formattedArr;
-};
-
-const diceRoll = (dice: rollableDice) => {
-	return `${dice.amount}${dice.type} + ${dice.modifier}`;
-};
-
-const formatAbilityModifier = (score: number) => {
-	if (!score || score > 30 || score < 0) {
-		throw new Error("Invalid Ability Score"); //TODO: properly catch this somewhere
-	}
-	const result = Math.floor((score - 10) / 2);
-	return `(${result >= 0 ? "+" : ""}${result})`;
-};
 
 export default async function MonsterCard({ index }: MonsterCardProps) {
 	const monster: Monster = await fetchMonster(index);
@@ -120,6 +87,60 @@ export default async function MonsterCard({ index }: MonsterCardProps) {
 					<p>
 						{monster.charisma} {formatAbilityModifier(monster.charisma)}
 					</p>
+				</div>
+			</section>
+			<section id="attributes">
+				{monster.saving_throws.length > 0 && (
+					<div id="saving-throws" className="flex gap-2">
+						<span className="font-bold">Saving Throws</span>
+						<span>
+							{commaSeparatedList(formatSavingThrows(monster.saving_throws))}
+						</span>
+					</div>
+				)}
+				{monster.skills.length > 0 && (
+					<div id="skills" className="flex gap-2">
+						<span className="font-bold">Skills</span>
+						<span>{commaSeparatedList(formatSkills(monster.skills))}</span>
+					</div>
+				)}
+				{monster.damage_vulnerabilities.length > 0 && (
+					<div id="damage-vulnerabilities" className="flex gap-1">
+						<span className="font-bold">Damage Vulnerabilities</span>
+						<span>{commaSeparatedList(monster.damage_vulnerabilities)}</span>
+					</div>
+				)}
+				{monster.damage_resistances.length > 0 && (
+					<div id="damage-resistances" className="flex gap-1">
+						<span className="font-bold">Damage Resistances</span>
+						<span>{commaSeparatedList(monster.damage_resistances)}</span>
+					</div>
+				)}
+				{monster.damage_immunities.length > 0 && (
+					<div id="damage-immunities" className="flex gap-1">
+						<span className="font-bold">Damage Immunities</span>
+						<span>{commaSeparatedList(monster.damage_immunities)}</span>
+					</div>
+				)}
+				{monster.condition_immunities.length > 0 && (
+					<div id="comdition-immunities" className="flex gap-1">
+						<span className="font-bold">Condition Immunities</span>
+						<span>{commaSeparatedList(monster.condition_immunities)}</span>
+					</div>
+				)}
+				<div id="senses" className="flex gap-1">
+					<span className="font-bold">Senses</span>
+					<span>{commaSeparatedList(formatSenses(monster.senses))}</span>
+				</div>
+				<div id="challenge-rating" className="flex gap-1">
+					<span className="font-bold">Challenge</span>
+					<span>{`${formatChallengeRating(monster.challenge_rating)} ${formatXP(
+						monster.xp
+					)}`}</span>
+				</div>
+				<div id="proficiency-bonus" className="flex gap-1">
+					<span className="font-bold">Proficiency Bonus</span>
+					<span>+{monster.proficiency_bonus}</span>
 				</div>
 			</section>
 		</article>
