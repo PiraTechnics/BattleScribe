@@ -44,6 +44,14 @@ export interface Monster {
 	legendary_actions: [CreatureAction];
 }
 
+export interface MonsterTableEntry {
+	index: string;
+	name: string;
+	size: CreatureSize;
+	type: CreatureType;
+	challenge_rating: ChallengeRating;
+}
+
 export type CreatureSize =
 	| "Tiny"
 	| "Small"
