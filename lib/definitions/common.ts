@@ -1,18 +1,3 @@
-export type DamageType =
-	| "piercing"
-	| "bludgeoning"
-	| "slashing"
-	| "cold"
-	| "fire"
-	| "lightning"
-	| "thunder"
-	| "poison"
-	| "acid"
-	| "necrotic"
-	| "radiant"
-	| "force"
-	| "psychic";
-
 export type Dice = "d4" | "d6" | "d8" | "d10" | "d12" | "d20";
 
 export interface RollableDice {
@@ -85,3 +70,35 @@ export interface Damage {
 	damage_type: string;
 	damage_dice: RollableDice;
 }
+
+export type DamageType =
+	| "piercing"
+	| "bludgeoning"
+	| "slashing"
+	| "cold"
+	| "fire"
+	| "lightning"
+	| "thunder"
+	| "poison"
+	| "acid"
+	| "necrotic"
+	| "radiant"
+	| "force"
+	| "psychic";
+
+export type Condition =
+	| "blinded"
+	| "charmed"
+	| "deafened"
+	| "exhaustion"
+	| "frightened"
+	| "grappled"
+	| "incapacitated"
+	| "invisible"
+	| "paralyzed"
+	| "petrified"
+	| "poisoned"
+	| "prone"
+	| "restrained"
+	| "stunned"
+	| "unconscious";

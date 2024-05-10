@@ -146,14 +146,9 @@ const MonsterSchema = new Schema(
 		actions: { type: [ActionSchema], required: true },
 		reactions: { type: [ActionSchema] },
 		legendary_actions: { type: [ActionSchema] },
-		desc: { type: String }, //TO-DO: should sanitize this since it can contain newlines and such
 	},
 	{ toJSON: { virtuals: true } }
 );
-
-/* DiceSchema.virtual("dice_roll").get(function () {
-	return `${this.amount}${this.type} + ${this.modifier}`;
-}); */
 
 // TO-DO: Image support? How to source, etc?
 

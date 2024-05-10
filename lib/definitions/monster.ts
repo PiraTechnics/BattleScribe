@@ -5,6 +5,8 @@ import {
 	RollableDice,
 	Dice,
 	Damage,
+	DamageType,
+	Condition,
 } from "./common";
 
 export interface Monster {
@@ -27,10 +29,10 @@ export interface Monster {
 	};
 	saving_throws: [Proficiency];
 	skills: [Proficiency];
-	damage_vulnerabilities: [string]; //should this and the other damage arrays be a list of possible damage types, loaded from db?
-	damage_resistances: [string];
-	damage_immunities: [string];
-	condition_immunities: [string]; //should be a list of possible conditions, loaded from db?
+	damage_vulnerabilities: [DamageType];
+	damage_resistances: [DamageType];
+	damage_immunities: [DamageType];
+	condition_immunities: [Condition];
 	senses: CreatureSenses;
 	languages?: [string]; //TO-DO: source languages list?
 	proficiency_bonus?: number;
@@ -40,7 +42,6 @@ export interface Monster {
 	actions: [CreatureAction];
 	reactions: [CreatureAction];
 	legendary_actions: [CreatureAction];
-	desc?: string;
 }
 
 export type CreatureSize =
