@@ -2,6 +2,8 @@ import { fetchMonstersPages } from "@/lib/data";
 import MonsterTable from "@/app/ui/monsters/monsterTable";
 import Pagination from "@/app/ui/monsters/pagination";
 import Search from "@/app/ui/monsters/search";
+import { Suspense } from "react";
+import { MonsterTableSkeleton } from "@/app/ui/skeletons";
 
 export default async function Page({
 	searchParams,
@@ -23,7 +25,9 @@ export default async function Page({
 
 			<div className="my-4">
 				<h1 className="text-xl md:text-2xl">Monsters</h1>
-				<MonsterTable query={query} currentPage={currentPage} />
+				<Suspense fallback={<MonsterTableSkeleton />}>
+					<MonsterTable query={query} currentPage={currentPage} />
+				</Suspense>
 			</div>
 			<div className="mt-5 flex w-full justify-center">
 				<Pagination totalPages={totalPages} />

@@ -12,6 +12,10 @@ export default async function MonsterTable({
 }) {
 	const monsters = await fetchFilteredMonsters(query, currentPage);
 
+	/* 	if (!monsters) {
+		return <p>No Data Available</p>;
+	} */
+
 	return (
 		<table className="min-w-full divide-y divide-gray-300">
 			<thead>

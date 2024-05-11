@@ -22,9 +22,11 @@ export async function fetchFilteredMonsters(
 	currentPage: number
 ) {
 	noStore(); //don't cache results
+
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
 	try {
+		await connectDB();
 		const raw = await Monster.find(
 			{ index: { $regex: query } },
 			"index name size type challenge_rating" //need to search "inclusively" -- ie "dragon" should return all monsters with "dragon" in the name, and/or all of type "dragon"
@@ -43,6 +45,10 @@ export async function fetchMonstersPages(query: string) {
 	noStore();
 
 	try {
+		//wait to see the skeleton
+		//await new Promise((resolve) => setTimeout(resolve, 3000));
+
+		await connectDB();
 		const totalItems = await Monster.find({
 			index: { $regex: query },
 		}).countDocuments();
