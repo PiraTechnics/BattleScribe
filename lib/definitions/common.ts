@@ -66,6 +66,21 @@ export type AbilityScore =
 	| 29
 	| 30;
 
+//Temp, will eventually have this in db maybe?
+export type CharacterClass =
+	| "bard"
+	| "barbarian"
+	| "cleric"
+	| "druid"
+	| "figher"
+	| "monk"
+	| "ranger"
+	| "rogue"
+	| "sorcerer"
+	| "paladin"
+	| "warlock"
+	| "wizard";
+
 export interface Damage {
 	damage_type: string;
 	damage_dice: RollableDice;
@@ -102,3 +117,9 @@ export type Condition =
 	| "restrained"
 	| "stunned"
 	| "unconscious";
+
+export interface DifficultyClass {
+	ability: string;
+	value: number;
+	success_type: "none" | "half" | "other";
+}

@@ -7,6 +7,7 @@ import {
 	Damage,
 	DamageType,
 	Condition,
+	DifficultyClass,
 } from "./common";
 
 export interface Monster {
@@ -147,6 +148,8 @@ export interface CreatureAction {
 			damage_dice: RollableDice;
 		}
 	];
+	usage: AbilityUsage;
+	dc: DifficultyClass;
 }
 
 export interface CreatureSenses {

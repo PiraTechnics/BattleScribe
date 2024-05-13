@@ -1,5 +1,6 @@
 //import dbConnect from "@/lib/db";
 import mongoose from "mongoose";
+import { DamageSchema, DiceSchema, DifficultyClassSchema } from "./Common";
 const Schema = mongoose.Schema;
 
 //TODO: connect to database from schema, if needed?
@@ -13,14 +14,6 @@ const ArmorClassSchema = new Schema(
 		armor: { type: String },
 		spell: { type: String },
 		condition: { type: String },
-	},
-	{ _id: false }
-);
-const DiceSchema = new Schema(
-	{
-		type: { type: String, required: true },
-		amount: { type: Number, required: true },
-		modifier: { type: Number },
 	},
 	{ _id: false }
 );
@@ -67,18 +60,7 @@ const AbilityUsageSchema = new Schema(
 	},
 	{ _id: false }
 );
-const DifficultyClassSchema = new Schema(
-	{
-		ability: { type: String, required: true },
-		value: { type: Number, required: true },
-		success_type: {
-			type: String,
-			required: true,
-			enum: ["none", "half", "other"],
-		},
-	},
-	{ _id: false }
-);
+
 const SpecialAbilitySchema = new Schema(
 	{
 		name: { type: String, required: true },
@@ -88,13 +70,7 @@ const SpecialAbilitySchema = new Schema(
 	},
 	{ _id: false }
 );
-const DamageSchema = new Schema(
-	{
-		damage_type: { type: String, required: true },
-		damage_dice: { type: DiceSchema, required: true },
-	},
-	{ _id: false }
-);
+
 const ActionSchema = new Schema(
 	{
 		name: { type: String, required: true },
