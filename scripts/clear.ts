@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Monster from "../models/Monster";
+import Monster from "../models/monsters/Monster";
 import dotenv from "dotenv";
 dotenv.config({ path: ".env.local" });
 

@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"seed": "ts-node --project tsconfig.seed.json scripts/seed.ts",
-		"clear": "ts-node --project tsconfig.seed.json scripts/clear.ts"
+		"clear": "ts-node --project tsconfig.seed.json scripts/clear.ts",
+		"monster-convert": "ts-node --project tsconfig.seed.json scripts/monster-schema-convert.ts"
 	},
 	"dependencies": {
 		"@heroicons/react": "^2.1.3",

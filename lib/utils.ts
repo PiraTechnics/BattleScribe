@@ -1,10 +1,16 @@
-import { RollableDice } from "./definitions/common";
+import {
+	AbilityShort,
+	Dice,
+	DiceRoll,
+	RollableDice,
+} from "@/models/common/types";
 import {
 	ChallengeRating,
-	CreatureSpeeds,
-	CreatureSenses,
-	Proficiency,
-} from "./definitions/monster";
+	Speed,
+	Senses,
+	SkillProficiency,
+	SavingThrowProficiency,
+} from "@/models/monsters/types";
 
 export const capitalizeWords = (string: string) => {
 	let capitalized = "";
@@ -25,6 +31,54 @@ export const abbreviate = (string: string) => {
 	return string.slice(0, 3).toUpperCase();
 };
 
+export const abilityFromAbbreviation = (short: AbilityShort) => {
+	switch (short) {
+		case "STR":
+			return "strength";
+		case "DEX":
+			return "dexterity";
+		case "CON":
+			return "constitution";
+		case "INT":
+			return "intelligence";
+		case "WIS":
+			return "wisdom";
+		case "CHA":
+			return "charisma";
+		default:
+			throw new Error("Invalid ability abbreviation!");
+	}
+};
+
+export const diceRollFromRollable = (rollable: RollableDice) => {
+	const diceRoll: DiceRoll = (rollable.amount +
+		rollable.type +
+		(rollable.modifier && rollable.modifier > 0
+			? `+${rollable.modifier}`
+			: `${rollable.modifier}`)) as DiceRoll;
+
+	return diceRoll;
+};
+
+export const rollableFromDiceRoll = (diceRoll: DiceRoll) => {
+	const arr = diceRoll.split(/[d]|[+]|[-]/);
+
+	const type: Dice = ("d" + arr[1]) as Dice;
+	const amount: number = parseInt(arr[0]);
+	//account for negative modifiers
+	const modifier = diceRoll.includes("-")
+		? parseInt(`-${arr[2]}`)
+		: parseInt(arr[2]); //potentially undefined?
+
+	const rollable: RollableDice = {
+		type: type,
+		amount: amount,
+		modifier: modifier,
+	};
+
+	return rollable;
+};
+
 export const commaSeparatedList = (array: Array<string>) => {
 	let string = "";
 	array.forEach((entry, i) => {
@@ -36,7 +90,7 @@ export const commaSeparatedList = (array: Array<string>) => {
 };
 
 export const formatChallengeRating = (cr: ChallengeRating) => {
-	if (cr === 0.2) return "1/8";
+	if (cr === 0.125) return "1/8";
 	else if (cr === 0.25) return "1/4";
 	else if (cr === 0.5) return "1/2";
 	else return cr.toString();
@@ -46,7 +100,7 @@ export const formatXP = (xp: number) => {
 	return `(${xp.toString()} XP)`;
 };
 
-export const formatSpeeds = (speeds: CreatureSpeeds) => {
+export const formatSpeeds = (speeds: Speed) => {
 	let formattedArr: Array<string> = [];
 	const speedsArr: [string, string | boolean][] = Object.entries(speeds);
 	speedsArr.forEach((entry) => {
@@ -59,7 +113,7 @@ export const formatSpeeds = (speeds: CreatureSpeeds) => {
 	return formattedArr;
 };
 
-export const formatSkills = (proficiences: Array<Proficiency>) => {
+export const formatSkills = (proficiences: Array<SkillProficiency>) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
 		formattedArr.push(`${capitalize(entry.ability)} +${entry.modifier}`);
@@ -68,7 +122,9 @@ export const formatSkills = (proficiences: Array<Proficiency>) => {
 	return formattedArr;
 };
 
-export const formatSavingThrows = (proficiences: Array<Proficiency>) => {
+export const formatSavingThrows = (
+	proficiences: Array<SavingThrowProficiency>
+) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
 		formattedArr.push(`${abbreviate(entry.ability)} +${entry.modifier}`);
@@ -77,7 +133,7 @@ export const formatSavingThrows = (proficiences: Array<Proficiency>) => {
 	return formattedArr;
 };
 
-export const formatSenses = (senses: CreatureSenses) => {
+export const formatSenses = (senses: Senses) => {
 	let formattedSenses: Array<string> = [];
 	const sensesArray = Object.entries(senses);
 

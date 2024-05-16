@@ -3,7 +3,7 @@ import {
 	CreatureAction,
 	Monster,
 	SpecialAbility,
-} from "@/lib/definitions/monster";
+} from "@/models/monsters/types";
 import {
 	commaSeparatedList,
 	diceRoll,

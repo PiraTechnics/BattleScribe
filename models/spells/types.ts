@@ -1,4 +1,4 @@
-import { CharacterClass, Damage, DifficultyClass } from "./common";
+import { CharacterClass, Damage, DifficultyClass } from "../common/types";
 
 type MagicSchool =
 	| "abjuration"

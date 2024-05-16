@@ -1,5 +1,5 @@
 import { fetchFilteredMonsters } from "@/lib/data";
-import { MonsterTableEntry } from "@/lib/definitions/monster";
+import { MonsterTableEntry } from "@/models/monsters/types";
 import { capitalize, formatChallengeRating } from "@/lib/utils";
 import Link from "next/link";
 

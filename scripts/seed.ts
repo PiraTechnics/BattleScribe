@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
-import { monsters } from "../lib/placeholder-data.js";
-import Monster from "../models/Monster";
+//import { monsters } from "../lib/placeholder-data.js";
+import Monster from "../models/monsters/Monster";
+import { Monster as MonsterType } from "../models/monsters/types";
 import dotenv from "dotenv";
+import { readFile } from "fs";
 dotenv.config({ path: ".env.local" });
 
 mongoose
@@ -16,18 +18,31 @@ if (!MONGODB_URI) {
 		"No DB String found, Please define DB_STRING in environment varaible file"
 	);
 }
-
 async function main() {
 	try {
-		await Monster.deleteMany(); //clear db
-		await Monster.insertMany(monsters); //seed db with placeholder data
-		console.log("Database Seeded");
+		await Monster.deleteMany();
+		console.log("Database Cleared");
+
+		readFile("scripts/converted-monsters.json", "utf8", async (error, data) => {
+			if (error) console.error(error.message);
+
+			const monsters: MonsterType[] = JSON.parse(data);
+			let count = 0;
+			const dbEntries = monsters.map(async (entry) => {
+				await new Monster(entry).save();
+				console.log(`Entry saved to Database: ${entry.name}`);
+				count++;
+			});
+			await Promise.all(dbEntries);
+			console.log(
+				`Successfully seeded ${count} out of ${monsters.length} entries`
+			);
+			mongoose.disconnect();
+			console.log("Database Disconnected");
+		});
 	} catch (error) {
 		console.log(error);
 	}
-
-	mongoose.disconnect();
-	console.log("Disconnected from Database");
 }
 
 main().catch((err) => {

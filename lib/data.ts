@@ -1,4 +1,4 @@
-import Monster from "@/models/Monster";
+import Monster from "@/models/monsters/Monster";
 import connectDB from "./db";
 import { unstable_noStore as noStore } from "next/cache";
 

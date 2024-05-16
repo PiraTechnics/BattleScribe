@@ -2,9 +2,11 @@ export type Dice = "d4" | "d6" | "d8" | "d10" | "d12" | "d20";
 
 export interface RollableDice {
 	type: Dice;
-	amount: Number;
-	modifier: Number;
+	amount: number;
+	modifier: number;
 }
+
+export type DiceRoll = `${number}${Dice}${`+${number}` | `${number}` | ""}`;
 
 export type Ability =
 	| "strength"
@@ -13,6 +15,8 @@ export type Ability =
 	| "intelligence"
 	| "wisdom"
 	| "charisma";
+
+export type AbilityShort = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 
 export type Skill =
 	| "athletics"
@@ -81,9 +85,24 @@ export type CharacterClass =
 	| "warlock"
 	| "wizard";
 
+export interface AbilityScores {
+	strength: AbilityScore;
+	dexterity: AbilityScore;
+	constitution: AbilityScore;
+	intelligence: AbilityScore;
+	wisdom: AbilityScore;
+	charisma: AbilityScore;
+}
+
 export interface Damage {
-	damage_type: string;
+	damage_type: DamageType;
 	damage_dice: RollableDice;
+	notes?: string;
+}
+
+export interface DamageChoice {
+	choose: number;
+	from: Damage[];
 }
 
 export type DamageType =
@@ -123,3 +142,5 @@ export interface DifficultyClass {
 	value: number;
 	success_type: "none" | "half" | "other";
 }
+
+type RestType = "short" | "long";

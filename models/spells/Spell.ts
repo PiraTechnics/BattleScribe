@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { DamageSchema, DifficultyClassSchema } from "./Common";
+import { DamageSchema, DifficultyClassSchema } from "../common/Schema";
 const Schema = mongoose.Schema;
 
 const AreaOfEffectSchema = new Schema({
