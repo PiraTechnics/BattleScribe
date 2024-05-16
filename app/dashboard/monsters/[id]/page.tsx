@@ -8,7 +8,6 @@ export default async function Page({ params }: { params: { id: string } }) {
 
 	return (
 		<main>
-			<h1>Monster Info</h1>
 			<MonsterCard index={id} />
 		</main>
 	);

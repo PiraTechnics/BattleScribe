@@ -1,4 +1,5 @@
 import {
+	Ability,
 	AbilityShort,
 	Dice,
 	DiceRoll,
@@ -27,10 +28,6 @@ export const capitalize = (string: string) => {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-export const abbreviate = (string: string) => {
-	return string.slice(0, 3).toUpperCase();
-};
-
 export const abilityFromAbbreviation = (short: AbilityShort) => {
 	switch (short) {
 		case "STR":
@@ -47,6 +44,25 @@ export const abilityFromAbbreviation = (short: AbilityShort) => {
 			return "charisma";
 		default:
 			throw new Error("Invalid ability abbreviation!");
+	}
+};
+
+export const abbreviationFromAbility = (ability: Ability) => {
+	switch (ability) {
+		case "strength":
+			return "STR";
+		case "dexterity":
+			return "DEX";
+		case "constitution":
+			return "CON";
+		case "intelligence":
+			return "INT";
+		case "wisdom":
+			return "WIS";
+		case "charisma":
+			return "CHA";
+		default:
+			throw new Error("Invalid ability Name!");
 	}
 };
 
@@ -127,7 +143,9 @@ export const formatSavingThrows = (
 ) => {
 	let formattedArr: Array<string> = [];
 	proficiences.forEach((entry) => {
-		formattedArr.push(`${abbreviate(entry.ability)} +${entry.modifier}`);
+		formattedArr.push(
+			`${abbreviationFromAbility(entry.ability)} +${entry.modifier}`
+		);
 	});
 
 	return formattedArr;
@@ -147,7 +165,10 @@ export const formatSenses = (senses: Senses) => {
 };
 
 export const diceRoll = (dice: RollableDice) => {
-	return `${dice.amount}${dice.type} + ${dice.modifier}`;
+	if (dice.modifier) {
+		if (dice.modifier > 0) return `${dice.amount}${dice.type}+${dice.modifier}`;
+		else return `${dice.amount}${dice.type}${dice.modifier}`;
+	} else return `${dice.amount}${dice.type}`;
 };
 
 export const formatAbilityModifier = (score: number) => {

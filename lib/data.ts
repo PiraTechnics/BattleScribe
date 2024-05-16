@@ -32,6 +32,7 @@ export async function fetchFilteredMonsters(
 			"index name size type challenge_rating" //need to search "inclusively" -- ie "dragon" should return all monsters with "dragon" in the name, and/or all of type "dragon"
 			//"index name size type challenge_rating"
 		)
+			.sort({ name: 1 })
 			.skip(offset)
 			.limit(ITEMS_PER_PAGE);
 		const data = JSON.parse(JSON.stringify(raw));
