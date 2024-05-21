@@ -1,6 +1,7 @@
-import { Condition } from "mongoose";
+import { Condition } from "../common/types";
 import { Monster } from "../monsters/types";
 import { Spell } from "../spells/types";
+import { v4 as uuidv4 } from "uuid";
 
 interface Effect {
 	name: string;
@@ -20,6 +21,7 @@ interface SpellEffect extends Effect {
 type ActiveEffect = Effect | ConditionEffect | SpellEffect;
 
 interface MonsterEncounterEntry {
+	//id: uuidv4;
 	monster: Monster; //reference to monster, do we need it all?
 	initiative: number;
 	max_hp: number; //comes from monster ref, but can be overridden
