@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import {
 	Ability,
 	Skill,
@@ -208,6 +209,7 @@ interface Action {
 /*** Misc ***/
 
 export interface Monster {
+	//_id: Types.ObjectId;
 	index: string;
 	name: string;
 	size: Size;

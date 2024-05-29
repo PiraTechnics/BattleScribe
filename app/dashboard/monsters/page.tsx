@@ -22,7 +22,6 @@ export default async function Page({
 			<div className="w-full">
 				<Search placeholder="Search Monsters..." />
 			</div>
-
 			<div className="my-4">
 				<h1 className="text-xl md:text-2xl">Monsters</h1>
 				<Suspense fallback={<MonsterTableSkeleton />}>

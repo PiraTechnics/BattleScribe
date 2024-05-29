@@ -1,11 +1,14 @@
 import Monster from "@/models/monsters/Monster";
 import connectDB from "./db";
 import { unstable_noStore as noStore } from "next/cache";
+import Encounter from "@/models/encounters/Encounter";
+
+/*** Monsters ***/
 
 export async function fetchMonster(name: string) {
 	try {
 		await connectDB();
-		console.log(`fetching: ${name}`);
+		//console.log(`fetching: ${name}`);
 
 		const raw = await Monster.findOne({ index: name });
 		const data = JSON.parse(JSON.stringify(raw));
@@ -42,6 +45,19 @@ export async function fetchFilteredMonsters(
 	}
 }
 
+export async function fetchAllMonsters() {
+	noStore();
+
+	try {
+		await connectDB();
+		const raw = await Monster.find({}, "index name hp").sort({ name: 1 });
+		const data = JSON.parse(JSON.stringify(raw));
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 export async function fetchMonstersPages(query: string) {
 	noStore();
 
@@ -60,4 +76,29 @@ export async function fetchMonstersPages(query: string) {
 	} catch (error) {
 		console.log(error);
 	}
+}
+
+/*** Encounters ***/
+
+export async function getAllEncounters() {
+	noStore();
+
+	try {
+		//wait to see the skeleton
+		//await new Promise((resolve) => setTimeout(resolve, 3000));
+
+		await connectDB();
+		const raw = await Encounter.find().populate({
+			path: "participants",
+			populate: { path: "monster" },
+		});
+		const data = JSON.parse(JSON.stringify(raw));
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export async function getEncounter(index: string) {
+	console.log("Not Yet Implemented");
 }

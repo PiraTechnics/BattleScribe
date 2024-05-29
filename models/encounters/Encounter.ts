@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { ActiveEffect, Encounter, MonsterEncounterEntry } from "./types";
 import Monster from "../monsters/Monster";
 const Schema = mongoose.Schema;
@@ -37,22 +37,9 @@ const ActiveEffectSchema = new Schema<ActiveEffect>({
 	//TO-DO: Add Spell active effect type
 });
 
-const EncounterStateSchema = new Schema({
-	current_round: {
-		type: Number,
-		required: true,
-		min: 0,
-		validate: {
-			validator: Number.isInteger,
-			message: `{VALUE} is not a positive integer value`,
-		},
-	},
-	current_turn: { type: String, required: true }, //this should be name, index, or some unique id of the participant in question --- leaving it a string FOR NOW
-});
-
 const MonsterEntrySchema = new Schema<MonsterEncounterEntry>({
-	monster: { type: Schema.Types.ObjectId, ref: Monster, required: true },
-	initiative: { type: Number, required: true },
+	monster: { type: Schema.Types.ObjectId, ref: Monster, required: true }, //this must be populated into a full monster, but held as a reference in DB
+	initiative: { type: Number },
 	max_hp: {
 		type: Number,
 		required: true,
@@ -74,11 +61,35 @@ const MonsterEntrySchema = new Schema<MonsterEncounterEntry>({
 	active_effects: { type: [ActiveEffectSchema], default: [] },
 });
 
+/* const EncounterStateSchema = new Schema(
+	{
+		current_round: {
+			type: Number,
+			min: 0,
+			validate: {
+				validator: Number.isInteger,
+				message: `{VALUE} is not a positive integer value`,
+			},
+		},
+		current_turn: { type: Schema.Types.ObjectId, ref: MonsterEntrySchema },
+	},
+	{ _id: false }
+); */
+
+/* export const MonsterEntryModel =
+	mongoose.models.MonsterEntryModel ||
+	mongoose.model("MonsterEntry", MonsterEntrySchema); */
+
 const EncounterSchema = new Schema<Encounter>({
+	name: { type: String, required: true, unique: true },
 	participants: { type: [MonsterEntrySchema], required: true },
 	active: { type: Boolean, default: false },
-	state: { type: EncounterStateSchema },
+	//state: EncounterStateSchema,
 });
 
+/* export const EncounterModel =
+	mongoose.models.EncounterModel ||
+	mongoose.model("Encounter", EncounterSchema);
+ */
 export default mongoose.models.Encounter ||
 	mongoose.model("Encounter", EncounterSchema);

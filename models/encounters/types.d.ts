@@ -1,7 +1,8 @@
+import { Types } from "mongoose";
 import { Condition } from "../common/types";
 import { Monster } from "../monsters/types";
 import { Spell } from "../spells/types";
-import { v4 as uuidv4 } from "uuid";
+import { Types } from "mongoose";
 
 interface Effect {
 	name: string;
@@ -21,19 +22,21 @@ interface SpellEffect extends Effect {
 type ActiveEffect = Effect | ConditionEffect | SpellEffect;
 
 interface MonsterEncounterEntry {
-	//id: uuidv4;
-	monster: Monster; //reference to monster, do we need it all?
-	initiative: number;
+	_id: Types.ObjectId;
+	monster: Monster; //this must be populated in when an entry is queried from our DB (as the schema holds an ObjectID)
+	initiative: number; //only applies if encounter is active
 	max_hp: number; //comes from monster ref, but can be overridden
 	current_hp: number;
 	active_effects: ActiveEffect[];
 }
 
 interface Encounter {
-	participants: MonsterEncounterEntry[]; //TO-DO: Expand to players when possible
+	_id: Types.ObjectId;
+	name: string;
+	participants: MonsterEncounterEntry[]; //TO-DO: Expand to include players when possible
 	active: boolean;
 	state: {
 		current_round: number;
-		current_turn: string; //monster or player name/reference
+		current_turn: MonsterEncounterEntry;
 	};
 }
